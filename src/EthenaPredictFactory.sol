@@ -1,0 +1,67 @@
+// src/BetMemeFactory.sol
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+import "./EthenaPredict.sol";
+import "./Types.sol";
+
+
+contract EthenaPredictFactory {
+
+    mapping(uint256 => address) public games;
+    uint256 public gameCounter;
+
+    function createEthenaPredict(uint256 duration, uint256 minAmount, address tokenAddress) external returns (EthenaPredict) {
+        EthenaPredict ethenaPredict = new EthenaPredict(duration, minAmount, tokenAddress);
+        games[gameCounter] = address(ethenaPredict);
+        gameCounter++;
+        return ethenaPredict;
+    }
+    function getGameList() external view returns (Types.Game[] memory) {
+        Types.Game[] memory gameList = new Types.Game[](gameCounter);
+        for (uint256 i = 0; i < gameCounter; i++) {
+            gameList[i] = EthenaPredict(games[i]).getGame();
+        }
+        return gameList;
+    }
+
+    function getEndedGameList() external view returns (Types.Game[] memory) {
+        Types.Game[] memory gameList = new Types.Game[](gameCounter);
+        uint256 endedGameCount = 0;
+        for (uint256 i = 0; i < gameCounter; i++) {
+            Types.Game memory gmae = EthenaPredict(games[i]).getGame();
+            if (gmae.isEnded) {
+                gameList[endedGameCount] = gmae;
+                endedGameCount++;
+            }
+        }
+        return gameList;
+    }
+
+    function getActiveGameList() external view returns (Types.Game[] memory) {
+        Types.Game[] memory gameList = new Types.Game[](gameCounter);
+        uint256 activeGameCount = 0;
+        for (uint256 i = 0; i < gameCounter; i++) {
+            Types.Game memory gmae = EthenaPredict(games[i]).getGame();
+            if (!gmae.isEnded) {
+                gameList[activeGameCount] = gmae;
+                activeGameCount++;
+            }
+        }
+        return gameList;
+    }
+
+    function getGame(address gameAddress) external view returns (Types.Game memory) {
+        return EthenaPredict(gameAddress).getGame();
+    }
+
+    function getUsersBetList(address gameAddress) external view returns (Types.UserBet[] memory) {
+        Types.UserBet[] memory userBetList = new Types.UserBet[](gameCounter);
+        for (uint256 i = 0; i < gameCounter; i++) {
+            userBetList[i] = EthenaPredict(gameAddress).getUserBet();
+        }
+        return userBetList;
+    }
+
+
+}
