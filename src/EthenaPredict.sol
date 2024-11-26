@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
+import "./BettingToken.sol";
 import "./ISUSDE.sol";
 import "./Types.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
@@ -19,7 +20,7 @@ contract EthenaPredict {
 
     event GameCreated(address tokenAddress);
     event BetPlaced(address indexed user, bool betUp, uint256 amount);
-    event GameEnded(uint256 lastPrice);
+    event GameEnded(uint256 lastPrice,uint256 winnerTokenId);
     event Claimed(address indexed user, uint256 reward);
 
     constructor(uint256 duration,uint256 minAmount, address tokenAddress) {
@@ -27,7 +28,7 @@ contract EthenaPredict {
         require(minAmount > 0, "Minimum bet amount must be greater than 0");
         //duratrion은 최소 10일 이상이어야함
         //require(duration >= 864000, "Duration must be greater than 10 days");
-        //betTime은 duration 보다 8일이전으로 맵핑
+
         IERC20 token = IERC20(tokenAddress);
         game = Types.Game({
             startTime: block.timestamp,
@@ -41,7 +42,9 @@ contract EthenaPredict {
             isBetEnded: false,
             isEnded: false,
             token: token,
-            betUsers: new address[](0)
+            betUsers: new address[](0),
+            winnerTokenId:100,
+            bettingToken: new BettingToken(address(this))
         });
 
         emit GameCreated(tokenAddress);
@@ -52,7 +55,7 @@ contract EthenaPredict {
         require(amount >= game.minAmount, "Bet amount too low");
         require(usdeToken.transferFrom(msg.sender, address(this), amount), "Token transfer failed");
         usdeToken.approve(sUsdeTokenAddress, amount);
-        sUsdeToken.deposit(amount, address(this));
+        //sUsdeToken.deposit(amount, address(this));
         require(game.isEnded == false, "Game already ended");
         Types.UserBet storage userBet = userBets[msg.sender];
         require(userBet.amount == 0, "User already placed bet");
@@ -63,8 +66,10 @@ contract EthenaPredict {
 
         if (betUp) {
             game.upAmount += amount;
+            game.bettingToken.mint(msg.sender,1, amount, "0x");
         } else {
             game.downAmount += amount;
+            game.bettingToken.mint(msg.sender,2, amount, "0x");
         }
 
         game.prizeAmount += amount;
@@ -77,7 +82,7 @@ contract EthenaPredict {
     function endBet() external {
         require(game.isBetEnded == false, "Bet already ended");
 
-        sUsdeToken.cooldownShares(sUsdeToken.balanceOf(address(this)));
+        //sUsdeToken.cooldownShares(sUsdeToken.balanceOf(address(this)));
         game.isBetEnded = true;
         betEndTime = block.timestamp;
     }
@@ -86,39 +91,40 @@ contract EthenaPredict {
         require(game.startTime != 0, "Game does not exist");
         require(game.isEnded == false, "Game already ended");
 
-        require(block.timestamp >= betEndTime + 604800, "unstake time not over");
+        //require(block.timestamp >= betEndTime + 604800, "unstake time not over");
 
-        sUsdeToken.unstake(address(this));
+        //sUsdeToken.unstake(address(this));
 
         game.lastPrice = lastPrice;
-        uint256 prizePool = usdeToken.balanceOf(address(this));
+        game.prizeAmount = usdeToken.balanceOf(address(this));
+
 
         if (game.lastPrice >= game.markedPrice) {
-            distributeRewards(game.upAmount, prizePool, true);
+            game.winnerTokenId = 1;
         } else {
-            distributeRewards(game.downAmount, prizePool, false);
+            game.winnerTokenId = 2;
         }
 
-        emit GameEnded(lastPrice);
+        emit GameEnded(lastPrice,game.winnerTokenId);
         game.isEnded = true;
     }
 
-    function distributeRewards(uint256 totalBet, uint256 prizePool, bool isBetUp) internal {
-        for (uint256 i = 0; i < game.betUsers.length; i++) {
-            address user = game.betUsers[i];
-            Types.UserBet storage userBet = userBets[user];
-            uint256 reward = 0;
-            if (userBet.betUp == isBetUp) {
-                reward = (userBet.amount * prizePool) / totalBet;
-                game.token.transfer(user, reward);
-                userBet.status = "WON";
-            } else {
-                reward = (userBet.amount * prizePool) / totalBet;
-                game.token.transfer(user, reward);
-                userBet.status = "LOST";
-            }
-            emit Claimed(user, reward);
+    function claim(uint256 amount) external {
+        require(game.isEnded == true, "Game not ended");
+        game.bettingToken.burn(msg.sender,game.winnerTokenId,amount);
+        uint prizeAmount = 0;
+
+        if (game.winnerTokenId == 1) {
+            prizeAmount = game.upAmount;
+        } else if (game.winnerTokenId == 2) {
+            prizeAmount = game.downAmount;
+        } else {
+            revert("Invalid winner token id");
         }
+
+        uint256 reward = amount * game.prizeAmount / prizeAmount;
+        usdeToken.transfer(msg.sender, reward);
+        emit Claimed(msg.sender, reward);
     }
 
     function getGame() external view returns (Types.Game memory) {

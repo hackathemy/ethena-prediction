@@ -3,6 +3,7 @@
 pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import {BettingToken} from "./BettingToken.sol";
 
 library Types {
     struct Game {
@@ -18,6 +19,8 @@ library Types {
         bool isEnded;
         IERC20 token;
         address[] betUsers;
+        uint256 winnerTokenId;
+        BettingToken bettingToken;
     }
 
     struct UserBet {

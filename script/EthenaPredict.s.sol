@@ -5,6 +5,7 @@ import "../src/EthenaPredict.sol";
 import "../src/EthenaPredictFactory.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "forge-std/Script.sol";
+import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 
 contract DeployEthenaPredict is Script {
     function run() external {
@@ -27,10 +28,14 @@ contract DeployEthenaPredict is Script {
 
         // Approve the BetMeme contract to spend tokens on behalf of the user
         IERC20 token = IERC20(usdeTokenAddress);
+
         uint256 amountToApprove = 10 wei; // Replace with the amount you want to approve
         token.approve(address(ethenaPredict), amountToApprove);
         ethenaPredict.bet(true, amountToApprove);
         ethenaPredict.endBet();
+        ethenaPredict.endGame(1);
+        ethenaPredict.getGame().bettingToken.setApprovalForAll(address(ethenaPredict), true);
+        ethenaPredict.claim(10 wei);
         console.log("Approved BetMeme contract to spend tokens");
 
         vm.stopBroadcast();

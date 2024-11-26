@@ -11,6 +11,7 @@ contract EthenaPredictFactory {
     mapping(uint256 => address) public games;
     uint256 public gameCounter;
 
+
     function createEthenaPredict(uint256 duration, uint256 minAmount, address tokenAddress) external returns (EthenaPredict) {
         EthenaPredict ethenaPredict = new EthenaPredict(duration, minAmount, tokenAddress);
         games[gameCounter] = address(ethenaPredict);
