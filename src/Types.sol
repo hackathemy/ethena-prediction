@@ -21,5 +21,7 @@ library Types {
         address[] betUsers;
         uint256 winnerTokenId;
         BettingToken bettingToken;
+        uint256 betEndTime;
+        uint256 gameEndTime;
     }
 }

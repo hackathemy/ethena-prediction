@@ -9,11 +9,9 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract EthenaPredict {
 
-    address public burnAddress = address(0xdead);
     address public sUsdeTokenAddress = 0x1B6877c6Dac4b6De4c5817925DC40E2BfdAFc01b;
     IERC20 public usdeToken = IERC20(0xf805ce4F96e0EdD6f0b6cd4be22B34b92373d696);
     ISUSDE public sUsdeToken = ISUSDE(sUsdeTokenAddress);
-    uint256 betEndTime = 0;
 
     Types.Game public game;
 
@@ -44,7 +42,9 @@ contract EthenaPredict {
             token: token,
             betUsers: new address[](0),
             winnerTokenId:100,
-            bettingToken: new BettingToken(address(this))
+            bettingToken: new BettingToken(address(this)),
+            betEndTime: 0,
+            gameEndTime: 0
         });
 
         emit GameCreated(tokenAddress);
@@ -76,9 +76,9 @@ contract EthenaPredict {
     function endBet() external {
         require(game.isBetEnded == false, "Bet already ended");
 
-        //sUsdeToken.cooldownShares(sUsdeToken.balanceOf(address(this)));
+
         game.isBetEnded = true;
-        betEndTime = block.timestamp;
+        game.betEndTime = block.timestamp;
     }
 
     function endGame(uint256 lastPrice) external {
@@ -86,7 +86,7 @@ contract EthenaPredict {
         require(game.isEnded == false, "Game already ended");
 
         //require(block.timestamp >= betEndTime + 604800, "unstake time not over");
-
+        //sUsdeToken.cooldownShares(sUsdeToken.balanceOf(address(this)));
         //sUsdeToken.unstake(address(this));
 
         game.lastPrice = lastPrice;
@@ -101,6 +101,13 @@ contract EthenaPredict {
 
         emit GameEnded(lastPrice,game.winnerTokenId);
         game.isEnded = true;
+        game.gameEndTime = block.timestamp;
+    }
+
+    function unstake() external {
+        require(game.isEnded == true, "Game not ended");
+        require(block.timestamp >= game.gameEndTime + 604800, "unstake time not over");
+        sUsdeToken.unstake(address(this));
     }
 
     function claim(uint256 amount) external {
