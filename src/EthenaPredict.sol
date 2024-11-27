@@ -21,7 +21,7 @@ contract EthenaPredict {
     event GameEnded(uint256 lastPrice,uint256 winnerTokenId);
     event Claimed(address indexed user, uint256 reward);
 
-    constructor(uint256 duration,uint256 minAmount, address tokenAddress) {
+    constructor(uint256 duration,uint256 minAmount, address tokenAddress, string memory upTokenURI, string memory downTokenURI) {
         require(duration > 0, "Duration must be greater than 0");
         require(minAmount > 0, "Minimum bet amount must be greater than 0");
         //duratrion은 최소 10일 이상이어야함
@@ -42,7 +42,7 @@ contract EthenaPredict {
             token: token,
             betUsers: new address[](0),
             winnerTokenId:100,
-            bettingToken: new BettingToken(address(this)),
+            bettingToken: new BettingToken(address(this),upTokenURI,downTokenURI),
             betEndTime: 0,
             gameEndTime: 0
         });

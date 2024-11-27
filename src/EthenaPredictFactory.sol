@@ -12,8 +12,8 @@ contract EthenaPredictFactory {
     uint256 public gameCounter;
 
 
-    function createEthenaPredict(uint256 duration, uint256 minAmount, address tokenAddress) external returns (EthenaPredict) {
-        EthenaPredict ethenaPredict = new EthenaPredict(duration, minAmount, tokenAddress);
+    function createEthenaPredict(uint256 duration, uint256 minAmount, address tokenAddress, string memory upTokenURI, string memory downTokenURI) external returns (EthenaPredict) {
+        EthenaPredict ethenaPredict = new EthenaPredict(duration, minAmount, tokenAddress, upTokenURI, downTokenURI);
         games[gameCounter] = address(ethenaPredict);
         gameCounter++;
         return ethenaPredict;

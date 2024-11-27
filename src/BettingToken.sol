@@ -8,7 +8,12 @@ import {ERC1155Supply} from "@openzeppelin/contracts/token/ERC1155/extensions/ER
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
 contract BettingToken is ERC1155, ERC1155Burnable, Ownable, ERC1155Supply {
-    constructor(address initialOwner) ERC1155("") Ownable(initialOwner) {}
+    mapping(uint256 => string) private _tokenURIs;
+
+    constructor(address initialOwner,string memory upTokenURI,string memory downTokenURI) ERC1155("") Ownable(initialOwner) {
+        setTokenURI(1, upTokenURI);
+        setTokenURI(2, downTokenURI);
+    }
 
     function mint(address account, uint256 id, uint256 amount, bytes memory data)
     public
@@ -31,5 +36,15 @@ contract BettingToken is ERC1155, ERC1155Burnable, Ownable, ERC1155Supply {
     override(ERC1155, ERC1155Supply)
     {
         super._update(from, to, ids, values);
+    }
+
+    // 특정 ID에 대한 URI를 설정하는 함수
+    function setTokenURI(uint256 id, string memory tokenURI) internal {
+        _tokenURIs[id] = tokenURI;
+    }
+
+    // uri(uint256 id) 함수 오버라이드
+    function uri(uint256 id) public view override returns (string memory) {
+        return _tokenURIs[id];
     }
 }
