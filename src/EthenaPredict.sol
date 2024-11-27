@@ -16,7 +16,7 @@ contract EthenaPredict {
     uint256 betEndTime = 0;
 
     Types.Game public game;
-    mapping(address => Types.UserBet) public userBets;
+
 
     event GameCreated(address tokenAddress);
     event BetPlaced(address indexed user, bool betUp, uint256 amount);
@@ -57,12 +57,7 @@ contract EthenaPredict {
         usdeToken.approve(sUsdeTokenAddress, amount);
         //sUsdeToken.deposit(amount, address(this));
         require(game.isEnded == false, "Game already ended");
-        Types.UserBet storage userBet = userBets[msg.sender];
-        require(userBet.amount == 0, "User already placed bet");
 
-        userBet.betUp = betUp;
-        userBet.amount += amount;
-        userBet.status = "PENDING";
 
         if (betUp) {
             game.upAmount += amount;
@@ -73,7 +68,6 @@ contract EthenaPredict {
         }
 
         game.prizeAmount += amount;
-        game.betUsers.push(msg.sender);
 
         emit BetPlaced(msg.sender, betUp, amount);
     }
@@ -131,11 +125,4 @@ contract EthenaPredict {
         return game;
     }
 
-    function getUserBet() external view returns (Types.UserBet memory) {
-        return userBets[msg.sender];
-    }
-
-    function getBetUsers() external view returns (address[] memory) {
-        return game.betUsers;
-    }
 }

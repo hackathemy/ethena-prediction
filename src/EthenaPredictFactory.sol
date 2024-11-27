@@ -56,13 +56,4 @@ contract EthenaPredictFactory {
         return EthenaPredict(gameAddress).getGame();
     }
 
-    function getUsersBetList(address gameAddress) external view returns (Types.UserBet[] memory) {
-        Types.UserBet[] memory userBetList = new Types.UserBet[](gameCounter);
-        for (uint256 i = 0; i < gameCounter; i++) {
-            userBetList[i] = EthenaPredict(gameAddress).getUserBet();
-        }
-        return userBetList;
-    }
-
-
 }

@@ -22,10 +22,4 @@ library Types {
         uint256 winnerTokenId;
         BettingToken bettingToken;
     }
-
-    struct UserBet {
-        bool betUp;
-        uint256 amount;
-        string status;
-    }
 }
