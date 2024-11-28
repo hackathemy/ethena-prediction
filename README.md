@@ -24,6 +24,28 @@ Play stably in an extreme and optimistic prediction space.
 ## Structure
 ![image](https://github.com/user-attachments/assets/4bc021ee-1692-4a7c-9043-11a955ab3fde)
 
+```mermaid
+sequenceDiagram
+    participant Admin
+    participant User
+    participant Ethena-PredictionContract
+    participant NFT-Market
+    participant sUSDeContract
+
+    Admin->>Ethena-PredictionContract: 1. create Game
+    User->>Ethena-PredictionContract: 2. Bet with Approve USDe Token
+    Ethena-PredictionContract->>sUSDeContract: 3. Bet Money (USDe) deposit
+    sUSDeContract->>Ethena-PredictionContract: 4. send sUSDe
+    Ethena-PredictionContract-->>User: 2-@. Mint ERC1155 Token
+    User<<-->>NFT-Market: +@. NFT (Optional)
+    Admin->>Ethena-PredictionContract: 5. End Bet
+    User<<-->>NFT-Market: +@. Trade NFT (Optional)
+    Admin->>Ethena-PredictionContract: 5. End Game
+    Ethena-PredictionContract->>NFT-Market: 6. CooldownShares
+    Ethena-PredictionContract->>sUSDeContract: 6. Unstake
+    User<<-->>Ethena-PredictionContract: 7. Claim
+```
+
 ## Target
 1. **Extreme Users**  
    - **Details:** Users who enjoy exploring new things.  
