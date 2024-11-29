@@ -51,12 +51,13 @@ contract EthenaPredict {
     }
 
     function bet(bool betUp, uint256 amount) external {
-        require(game.startTime != 0, "Game does not exist");
+        require(game.isEnded == false, "Game already ended");
+         require(game.startTime != 0, "Game does not exist");
         require(amount >= game.minAmount, "Bet amount too low");
         require(usdeToken.transferFrom(msg.sender, address(this), amount), "Token transfer failed");
+
         usdeToken.approve(sUsdeTokenAddress, amount);
         //sUsdeToken.deposit(amount, address(this));
-        require(game.isEnded == false, "Game already ended");
 
 
         if (betUp) {
@@ -87,7 +88,6 @@ contract EthenaPredict {
 
         //require(block.timestamp >= betEndTime + 604800, "unstake time not over");
         //sUsdeToken.cooldownShares(sUsdeToken.balanceOf(address(this)));
-        //sUsdeToken.unstake(address(this));
 
         game.lastPrice = lastPrice;
         game.prizeAmount = usdeToken.balanceOf(address(this));
