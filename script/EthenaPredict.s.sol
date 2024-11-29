@@ -7,11 +7,12 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "forge-std/Script.sol";
 import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 
+
 contract DeployEthenaPredict is Script {
     function run() external {
         vm.startBroadcast();
 
-        // Deploy the BetMeme contract
+        // Deploy the DeployEthenaPredict contract
 
 
         address usdeTokenAddress = 0xf805ce4F96e0EdD6f0b6cd4be22B34b92373d696; // Replace with your token address
