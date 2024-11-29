@@ -6,7 +6,7 @@ import "./BettingToken.sol";
 import "./ISUSDE.sol";
 import "./Types.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "chainlink-brownie-contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
+import "chainlink-brownie-contracts/v0.8/shared/interfaces/AggregatorV3Interface.sol";
 
 
 contract EthenaPredict {
@@ -14,6 +14,7 @@ contract EthenaPredict {
     address public sUsdeTokenAddress = 0x1B6877c6Dac4b6De4c5817925DC40E2BfdAFc01b;
     IERC20 public usdeToken = IERC20(0xf805ce4F96e0EdD6f0b6cd4be22B34b92373d696);
     ISUSDE public sUsdeToken = ISUSDE(sUsdeTokenAddress);
+    AggregatorV3Interface internal priceFeed;
 
     Types.Game public game;
 
@@ -23,17 +24,16 @@ contract EthenaPredict {
     event GameEnded(uint256 lastPrice,uint256 winnerTokenId);
     event Claimed(address indexed user, uint256 reward);
 
-    constructor(uint256 duration,uint256 minAmount, address tokenAddress, string memory upTokenURI, string memory downTokenURI) {
+    constructor(uint256 duration,uint256 minAmount, address _priceFeed, string memory upTokenURI, string memory downTokenURI) {
         require(duration > 0, "Duration must be greater than 0");
         require(minAmount > 0, "Minimum bet amount must be greater than 0");
         //duratrion은 최소 10일 이상이어야함
         //require(duration >= 864000, "Duration must be greater than 10 days");
-
-        IERC20 token = IERC20(tokenAddress);
+        priceFeed = AggregatorV3Interface(_priceFeed);
         game = Types.Game({
             startTime: block.timestamp,
             duration: duration,
-            markedPrice: 0,
+            markedPrice: getLatestPrice(),
             lastPrice: 0,
             minAmount: minAmount,
             upAmount: 0,
@@ -41,7 +41,7 @@ contract EthenaPredict {
             prizeAmount: 0,
             isBetEnded: false,
             isEnded: false,
-            token: token,
+            priceFeed: _priceFeed,
             betUsers: new address[](0),
             winnerTokenId:100,
             bettingToken: new BettingToken(address(this),upTokenURI,downTokenURI),
@@ -49,12 +49,12 @@ contract EthenaPredict {
             gameEndTime: 0
         });
 
-        emit GameCreated(tokenAddress);
+        emit GameCreated(_priceFeed);
     }
 
     function bet(bool betUp, uint256 amount) external {
         require(game.isEnded == false, "Game already ended");
-         require(game.startTime != 0, "Game does not exist");
+        require(game.startTime != 0, "Game does not exist");
         require(amount >= game.minAmount, "Bet amount too low");
         require(usdeToken.transferFrom(msg.sender, address(this), amount), "Token transfer failed");
 
@@ -92,7 +92,6 @@ contract EthenaPredict {
         //sUsdeToken.cooldownShares(sUsdeToken.balanceOf(address(this)));
 
         game.lastPrice = lastPrice;
-        game.prizeAmount = usdeToken.balanceOf(address(this));
 
 
         if (game.lastPrice >= game.markedPrice) {
@@ -110,6 +109,7 @@ contract EthenaPredict {
         require(game.isEnded == true, "Game not ended");
         require(block.timestamp >= game.gameEndTime + 604800, "unstake time not over");
         sUsdeToken.unstake(address(this));
+        game.prizeAmount = usdeToken.balanceOf(address(this));
     }
 
     function claim(uint256 amount) external {
@@ -132,6 +132,17 @@ contract EthenaPredict {
 
     function getGame() external view returns (Types.Game memory) {
         return game;
+    }
+
+    function getLatestPrice() public view returns (uint256) {
+        (
+        /* uint80 roundID */,
+            int price,
+        /* uint startedAt */,
+        /* uint timeStamp */,
+        /* uint80 answeredInRound */
+        ) = priceFeed.latestRoundData();
+        return uint256(price);
     }
 
 }

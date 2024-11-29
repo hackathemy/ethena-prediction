@@ -17,7 +17,7 @@ library Types {
         uint256 prizeAmount;
         bool isBetEnded;
         bool isEnded;
-        IERC20 token;
+        address priceFeed;
         address[] betUsers;
         uint256 winnerTokenId;
         BettingToken bettingToken;
