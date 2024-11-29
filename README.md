@@ -17,6 +17,38 @@ Play stably in an extreme and optimistic prediction space.
   - While maintaining familiar elements, we integrate diverse Web3 technologies to provide a more engaging and advanced prediction market service that sets us apart from existing solutions.
 
 ## Features
+#### **1. USDe-based Payment and Reward System (Ethena)**  
+- **Description**: Maps USDe to **sUSDe tokens** on a 1:1 basis for staking and payments within the platform.  
+- **Effect**:  
+  - Enhances the value of prediction options and fosters **P2P liquidity** through transactions.  
+  - Increases overall platform transaction volume and user engagement.  
+- **Additional Benefits**:  
+  - **sUSDe's annualized return of 16.8%** maximizes deposit and transaction incentives.  
+  - The high reward structure mitigates risks for long-term predictions, encouraging user participation and boosting market liquidity.  
+
+---
+
+#### **2. ERC-1155 for Market Diversity**  
+- **Description**: Employs **ERC-1155 tokens** to represent prediction market positions, enabling users to manage multiple assets within a single contract.  
+- **Effect**:  
+  - Reduces gas fees and improves efficiency for creating, holding, and trading diverse prediction outcomes.  
+  - Enhances user experience by simplifying asset management across varied market predictions.  
+
+---
+
+#### **3. Multi-chain Support (LayerZero)**  
+- **Description**: Integrates **LayerZero protocol** to enable USDe usage across multiple blockchain networks.  
+- **Effect**:  
+  - Offers seamless multi-chain functionality, expanding access to users across various ecosystems.  
+  - Ensures interoperability for prediction market operations on diverse blockchain networks.  
+
+---
+
+#### **4. Real-time Data Insights via Subgraphs (Goldsky)**  
+- **Description**: Utilizes **Goldsky-powered subgraphs** to provide real-time updates on ERC standard transactions and data.  
+- **Effect**:  
+  - Delivers accurate, real-time information for users and enhances the transparency of prediction markets.  
+  - Enables seamless monitoring and analytics for active market participants.  
 
 ### Smart Contract
 #### [Ethena]() | [LayerZero]() | [Goldsky]()
