@@ -6,7 +6,7 @@ import "./EthenaPredict.sol";
 import "./Types.sol";
 
 
-event CcreateEthenaPredict(uint256 duration, uint256 minAmount, address tokenAddress, string  upTokenURI, string  downTokenURI);
+event CreateEthenaPredict(uint256 duration, uint256 minAmount, address tokenAddress, string  upTokenURI, string  downTokenURI);
 
 contract EthenaPredictFactory {
 
@@ -19,7 +19,7 @@ contract EthenaPredictFactory {
         games[gameCounter] = address(ethenaPredict);
         gameCounter++;
 
-        emit CcreateEthenaPredict(duration, minAmount, tokenAddress, upTokenURI, downTokenURI);
+        emit CreateEthenaPredict(duration, minAmount, tokenAddress, upTokenURI, downTokenURI);
 
         return ethenaPredict;
     }
