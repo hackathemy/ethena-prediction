@@ -6,6 +6,8 @@ import "./EthenaPredict.sol";
 import "./Types.sol";
 
 
+event CcreateEthenaPredict(uint256 duration, uint256 minAmount, address tokenAddress, string  upTokenURI, string  downTokenURI);
+
 contract EthenaPredictFactory {
 
     mapping(uint256 => address) public games;
@@ -16,6 +18,9 @@ contract EthenaPredictFactory {
         EthenaPredict ethenaPredict = new EthenaPredict(duration, minAmount, tokenAddress, upTokenURI, downTokenURI);
         games[gameCounter] = address(ethenaPredict);
         gameCounter++;
+
+        emit CcreateEthenaPredict(duration, minAmount, tokenAddress, upTokenURI, downTokenURI);
+
         return ethenaPredict;
     }
     function getGameList() external view returns (Types.Game[] memory) {
