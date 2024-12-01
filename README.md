@@ -1,7 +1,7 @@
 # ETHENA Predcition
 Play stably in an extreme and optimistic prediction space.
 
-#### [Platform]() | [Demo Video](https://youtu.be/4h4g7nn7MJo) | [Pitchdeck](https://www.miricanvas.com/v/13y5sgr) | [Contract](https://github.com/hackathemy/ethena-prediction?tab=readme-ov-file#smart-contract)
+#### [Platform](https://ethena-prediction-6jcwszpvi-chan3785s-projects.vercel.app/) | [Demo Video](https://youtu.be/4h4g7nn7MJo) | [Pitchdeck](https://www.miricanvas.com/v/13y5sgr) | [Contract](https://github.com/hackathemy/ethena-prediction?tab=readme-ov-file#smart-contract)
 
 ## Motivation
 > **A New Approach to Prediction Markets**
