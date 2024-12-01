@@ -26,23 +26,17 @@ Play stably in an extreme and optimistic prediction space.
   - **sUSDe's annualized return of 16.8%** maximizes deposit and transaction incentives.  
   - The high reward structure mitigates risks for long-term predictions, encouraging user participation and boosting market liquidity.  
 
----
-
 #### **2. ERC-1155 for Market Diversity**  
 - **Description**: Employs **ERC-1155 tokens** to represent prediction market positions, enabling users to manage multiple assets within a single contract.  
 - **Effect**:  
   - Reduces gas fees and improves efficiency for creating, holding, and trading diverse prediction outcomes.  
   - Enhances user experience by simplifying asset management across varied market predictions.  
 
----
-
 #### **3. Multi-chain Support (LayerZero Developing)**  
 - **Description**: Integrates **LayerZero protocol** to enable USDe usage across multiple blockchain networks.  
 - **Effect**:  
   - Offers seamless multi-chain functionality, expanding access to users across various ecosystems.  
   - Ensures interoperability for prediction market operations on diverse blockchain networks.  
-
----
 
 #### **4. Real-time Data Insights via Subgraphs (Goldsky)**  
 - **Description**: Utilizes **Goldsky-powered subgraphs** to provide real-time updates on ERC standard transactions and data.  
@@ -53,7 +47,7 @@ Play stably in an extreme and optimistic prediction space.
 ### Smart Contract
 #### [Ethena](https://github.com/hackathemy/ethena-prediction/blob/main/script/EthenaPredict.s.sol) | [Goldsky]() | [LayerZero]()
 
-> **Ethena:**
+> **Ethena**
 
 While developing our betting system, we identified a significant inefficiency: funds remained idle during the betting period. To address this issue, we integrated Athena Network's USDe into our solution.
 
