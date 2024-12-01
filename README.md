@@ -51,7 +51,20 @@ Play stably in an extreme and optimistic prediction space.
   - Enables seamless monitoring and analytics for active market participants.  
 
 ### Smart Contract
-#### [Ethena]() | [LayerZero]() | [Goldsky]()
+#### [Ethena](https://github.com/hackathemy/ethena-prediction/blob/main/script/EthenaPredict.s.sol) | [Goldsky]() | [LayerZero]()
+
+**Ethena**
+While developing our betting system, we identified a significant inefficiency: funds remained idle during the betting period. To address this issue, we integrated Athena Network's USDE into our solution.
+
+The betting process is structured as follows:
+1. Betting Participation: When users place a bet, their funds are deposited and converted into sUSDE, which is staked.
+2. Staking Period: During the betting period, the staked funds generate interest.
+3. Bet Settlement: Once the betting round concludes, users can unstake their funds to receive their original betting amount along with the accrued interest.
+
+This approach not only optimizes fund utilization but also creates additional economic value. Participants benefit from both the excitement of betting and the financial advantage of earning interest on their funds.
+
+**Goldsky**
+
 
 ## Structure
 ![image](https://github.com/user-attachments/assets/4bc021ee-1692-4a7c-9043-11a955ab3fde)
