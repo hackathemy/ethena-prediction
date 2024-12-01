@@ -45,7 +45,7 @@ Play stably in an extreme and optimistic prediction space.
   - Enables seamless monitoring and analytics for active market participants.  
 
 ### Smart Contract
-#### [Ethena](https://github.com/hackathemy/ethena-prediction/blob/main/script/EthenaPredict.s.sol) | [Goldsky]() | [LayerZero]()
+#### [Ethena](https://github.com/hackathemy/ethena-prediction/blob/main/script/EthenaPredict.s.sol) | [Goldsky]() | [LayerZero](https://github.com/hackathemy/usde-layerzero)
 
 > **Ethena**
 
@@ -61,6 +61,10 @@ This approach not only optimizes fund utilization but also creates additional ec
 > **Goldsky**
 
 We utilized Goldsky's GraphQL API to dynamically fetch game-related event data occurring on the blockchain. Using Apollo Client, we executed GraphQL queries and presented the data to users in a table format. After fetching the data, it was transformed into a human-readable format to make it easier to understand.
+
+> **LayerZero**
+
+This project enables seamless transfer of USDE from the Etherea Network to the Sepolia Network using LayerZero, a cutting-edge interoperability protocol for cross-chain communication.
 
 ## Structure
 ![image](https://github.com/user-attachments/assets/4bc021ee-1692-4a7c-9043-11a955ab3fde)
