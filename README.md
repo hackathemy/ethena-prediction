@@ -55,10 +55,10 @@ Play stably in an extreme and optimistic prediction space.
 
 **Ethena:**
 
-While developing our betting system, we identified a significant inefficiency: funds remained idle during the betting period. To address this issue, we integrated Athena Network's USDE into our solution.
+While developing our betting system, we identified a significant inefficiency: funds remained idle during the betting period. To address this issue, we integrated Athena Network's USDe into our solution.
 
 The betting process is structured as follows:
-1. Betting Participation: When users place a bet, their funds are deposited and converted into sUSDE, which is staked.
+1. Betting Participation: When users place a bet, their funds are deposited and converted into sUSDe, which is staked.
 2. Staking Period: During the betting period, the staked funds generate interest.
 3. Bet Settlement: Once the betting round concludes, users can unstake their funds to receive their original betting amount along with the accrued interest.
 
@@ -66,6 +66,7 @@ This approach not only optimizes fund utilization but also creates additional ec
 
 **Goldsky**
 
+We utilized Goldsky's GraphQL API to dynamically fetch game-related event data occurring on the blockchain. Using Apollo Client, we executed GraphQL queries and presented the data to users in a table format. After fetching the data, it was transformed into a human-readable format to make it easier to understand.
 
 ## Structure
 ![image](https://github.com/user-attachments/assets/4bc021ee-1692-4a7c-9043-11a955ab3fde)
@@ -105,7 +106,7 @@ sequenceDiagram
    - **Details:** Existing users of the Ethena ecosystem.  
    - **Description:** A prediction trading platform that increases liquidity by leveraging the existing Ethena ecosystem. It provides new income opportunities for users through various re-staking services powered by USDe.
 
-## Business Model
+---
 
 <details>
 <summary>
