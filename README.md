@@ -53,7 +53,7 @@ Play stably in an extreme and optimistic prediction space.
 ### Smart Contract
 #### [Ethena](https://github.com/hackathemy/ethena-prediction/blob/main/script/EthenaPredict.s.sol) | [Goldsky]() | [LayerZero]()
 
-**Ethena:**
+> **Ethena:**
 
 While developing our betting system, we identified a significant inefficiency: funds remained idle during the betting period. To address this issue, we integrated Athena Network's USDe into our solution.
 
@@ -64,7 +64,7 @@ The betting process is structured as follows:
 
 This approach not only optimizes fund utilization but also creates additional economic value. Participants benefit from both the excitement of betting and the financial advantage of earning interest on their funds.
 
-**Goldsky**
+> **Goldsky**
 
 We utilized Goldsky's GraphQL API to dynamically fetch game-related event data occurring on the blockchain. Using Apollo Client, we executed GraphQL queries and presented the data to users in a table format. After fetching the data, it was transformed into a human-readable format to make it easier to understand.
 
