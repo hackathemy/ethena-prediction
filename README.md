@@ -1,7 +1,7 @@
 # ETHENA Predcition
 Play stably in an extreme and optimistic prediction space.
 
-#### [Platform]() | [Demo Video]() | [Pitchdeck]()
+#### [Platform]() | [Demo Video]() | [Pitchdeck](https://www.miricanvas.com/v/13y5sgr)
 
 ## Motivation
 > **A New Approach to Prediction Markets**
@@ -36,7 +36,7 @@ Play stably in an extreme and optimistic prediction space.
 
 ---
 
-#### **3. Multi-chain Support (LayerZero)**  
+#### **3. Multi-chain Support (LayerZero Developing)**  
 - **Description**: Integrates **LayerZero protocol** to enable USDe usage across multiple blockchain networks.  
 - **Effect**:  
   - Offers seamless multi-chain functionality, expanding access to users across various ecosystems.  
