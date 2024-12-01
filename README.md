@@ -53,7 +53,8 @@ Play stably in an extreme and optimistic prediction space.
 ### Smart Contract
 #### [Ethena](https://github.com/hackathemy/ethena-prediction/blob/main/script/EthenaPredict.s.sol) | [Goldsky]() | [LayerZero]()
 
-**Ethena**
+**Ethena:**
+
 While developing our betting system, we identified a significant inefficiency: funds remained idle during the betting period. To address this issue, we integrated Athena Network's USDE into our solution.
 
 The betting process is structured as follows:
