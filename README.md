@@ -45,7 +45,7 @@ Play stably in an extreme and optimistic prediction space.
   - Enables seamless monitoring and analytics for active market participants.  
 
 ### Smart Contract
-#### [Ethena](https://github.com/hackathemy/ethena-prediction/blob/main/script/EthenaPredict.s.sol) | [Goldsky]() | [LayerZero](https://github.com/hackathemy/usde-layerzero)
+#### [Ethena](https://github.com/hackathemy/ethena-prediction/blob/main/script/EthenaPredict.s.sol) | [Goldsky](https://github.com/IJHO-NUl1l1/goldsky-contract-subgraph) | [LayerZero](https://github.com/hackathemy/usde-layerzero)
 
 > **Ethena**
 
